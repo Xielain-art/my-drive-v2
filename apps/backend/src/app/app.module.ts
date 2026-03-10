@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { FileEntity } from './file.entity';
+import { S3Module } from './s3/s3.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { FileEntity } from './file.entity';
       entities: [FileEntity],
       synchronize: true,
     }),
+    S3Module,
   ],
   controllers: [AppController],
   providers: [AppService],
