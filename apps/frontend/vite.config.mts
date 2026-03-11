@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 import tailwindcss from '@tailwindcss/vite';
+import { tanstackRouter } from '@tanstack/router-plugin/vite';
 
 export default defineConfig(() => ({
   root: import.meta.dirname,
@@ -17,6 +18,10 @@ export default defineConfig(() => ({
     host: 'localhost',
   },
   plugins: [
+    tanstackRouter({
+      target: 'react',
+      autoCodeSplitting: true,
+    }),
     react(),
     tailwindcss(),
     nxViteTsPaths(),
