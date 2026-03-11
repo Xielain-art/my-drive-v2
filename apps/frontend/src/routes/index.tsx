@@ -32,10 +32,10 @@ function Index() {
 
   return (
     <div className="p-2">
+
       <h3 className="text-2xl font-bold mb-4">
         Данные с сервера (через Query Key Factory):
       </h3>
-
       <ul className="mb-6 space-y-2">
         {files.map((file) => (
           <li key={file.id} className="p-2 border rounded shadow-sm">

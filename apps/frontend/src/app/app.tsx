@@ -3,14 +3,7 @@ import {SidebarProvider, SidebarTrigger, Sidebar, SidebarHeader, SidebarContent,
 export function App() {
   return (
     <SidebarProvider>
-      <Sidebar>
-        <SidebarHeader />
-        <SidebarContent>
-          <SidebarGroup />
-          <SidebarGroup />
-        </SidebarContent>
-        <SidebarFooter />
-      </Sidebar>
+
       <main>
         <SidebarTrigger />
       </main>
