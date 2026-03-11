@@ -1,4 +1,4 @@
-import { FileRecord } from '@my-drive-v2/shared-types';
+import { FileRecord, UploadFileResponse } from '@my-drive-v2/shared-types';
 import { apiClient } from '../../client';
 
 
@@ -8,7 +8,11 @@ export const fetchFiles = async (): Promise<FileRecord[]> => {
   return data;
 };
 
-// export const fetchTodoById = async (id: string | number): Promise<Todo> => {
-//   const { data } = await apiClient.get<Todo>(`/todos/${id}`);
-//   return data;
-// };
+export const uploadFile = async (file: File): Promise<UploadFileResponse> => {
+  const formData = new FormData();
+  formData.set('file', file);
+  console.log(formData);
+  const { data } = await apiClient.post('/files/upload', formData);
+  return data;
+};
+

@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@my-drive-v2/ui';
 import { queries } from '../api';
+import {FileUploader} from '../components/file-uploader';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -32,7 +33,7 @@ function Index() {
 
   return (
     <div className="p-2">
-
+      <FileUploader />
       <h3 className="text-2xl font-bold mb-4">
         Данные с сервера (через Query Key Factory):
       </h3>
