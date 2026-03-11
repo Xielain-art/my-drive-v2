@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { InjectRepository } from '@nestjs/typeorm';
+import { AuthenticatedUser } from 'nest-keycloak-connect';
 import { Repository } from 'typeorm';
 import {
   ApiTags,
@@ -44,7 +45,7 @@ export class S3Controller {
     type: UploadFileResponseDto,
   })
   @ApiBadRequestResponse({ description: 'Файл не был передан в запросе.' })
-  async uploadFile(@UploadedFile() file: Express.Multer.File): Promise<UploadFileResponseDto> {
+  async uploadFile(@UploadedFile() file: Express.Multer.File, @AuthenticatedUser() user: any): Promise<UploadFileResponseDto> {
     if (!file) {
       throw new BadRequestException('Файл не найден');
     }
@@ -54,6 +55,7 @@ export class S3Controller {
     const newFile = this.fileRepository.create({
       name: file.originalname,
       url: fileUrl,
+      userId: user.sub,
     });
 
     const savedFile = await this.fileRepository.save(newFile);
@@ -73,9 +75,11 @@ export class S3Controller {
     description: 'Возвращает массив файлов, отсортированных по дате (новые сверху)',
     type: [FileEntity],
   })
-  async getAllFiles(): Promise<FileEntity[]> {
+  async getAllFiles(@AuthenticatedUser() user: any): Promise<FileEntity[]> {
+    console.log(user)
     return await this.fileRepository.find({
       order: { createdAt: 'DESC' },
+      where: { userId: user.sub },
     });
   }
 }

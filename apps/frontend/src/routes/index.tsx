@@ -1,3 +1,4 @@
+import { useKeycloak } from '@react-keycloak/web';
 import { createFileRoute } from '@tanstack/react-router';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@my-drive-v2/ui';
@@ -10,7 +11,7 @@ export const Route = createFileRoute('/')({
 
 function Index() {
   const queryClient = useQueryClient();
-
+  const { keycloak } = useKeycloak();
   // const { isPending, error, data } = useQuery({
   //   ...queries.todos.list(2),
   // });
@@ -29,7 +30,7 @@ function Index() {
   if (error)
     return <div className="p-4 text-red-500">Error: {error.message}</div>;
 
-  if (!files?.length || !files) return <div className="p-4">No files found...</div>;
+  // if (!files?.length || !files) return <div className="p-4">No files found...</div>;
 
   return (
     <div className="p-2">
@@ -48,6 +49,7 @@ function Index() {
       </ul>
 
       <Button onClick={handleInvalidate}>Сбросить кэш (Invalidate)</Button>
+      <Button onClick={() => keycloak.logout()}>Разлогиниться</Button>
     </div>
   );
 }

@@ -27,6 +27,15 @@ services:
       - "${MINIO_CONSOLE_PORT}:${MINIO_CONSOLE_PORT}"
     volumes:
       - miniodata:/data
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.4
+    container_name: my-drive-keycloak
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8080:8080"
 
 volumes:
   pgdata:

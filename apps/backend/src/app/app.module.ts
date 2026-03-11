@@ -1,5 +1,7 @@
 import 'dotenv/config';
 import { APP_PIPE, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_GUARD } from '@nestjs/core'
+import { KeycloakConnectModule, AuthGuard, RoleGuard, TokenValidation } from 'nest-keycloak-connect';
 import {
   ZodValidationPipe,
   ZodSerializerInterceptor,
@@ -14,6 +16,14 @@ import { S3Module } from './s3/s3.module';
 
 @Module({
   imports: [
+    KeycloakConnectModule.register({
+      authServerUrl: 'http://localhost:8080',
+      realm: 'my-drive',
+      clientId: 'my-drive-front',
+      secret: 'secret',
+      useNestLogger: true,
+      tokenValidation: TokenValidation.OFFLINE,
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
@@ -31,6 +41,15 @@ import { S3Module } from './s3/s3.module';
     {
       provide: APP_INTERCEPTOR,
       useClass: ZodSerializerInterceptor,
-    },],
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RoleGuard,
+    },
+  ],
 })
 export class AppModule {}

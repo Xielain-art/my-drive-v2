@@ -21,4 +21,7 @@ export class FileEntity {
   @ApiProperty({ example: '2026-03-10T12:00:00Z', description: 'Дата загрузки' })
   @CreateDateColumn()
   createdAt: Date;
+
+  @Column({ type: 'varchar', length: 255 })
+  userId: string;
 }
