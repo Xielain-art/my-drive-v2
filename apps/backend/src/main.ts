@@ -2,14 +2,13 @@ import { NestFactory } from '@nestjs/core';
 import { Logger } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import {
-  ZodValidationPipe,
-  ZodSerializerInterceptor,
   cleanupOpenApiDoc
 } from 'nestjs-zod';
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors(); // разрешает все запросы
   //
   // app.useGlobalPipes(new ZodValidationPipe());
   // app.useGlobalInterceptors(new ZodSerializerInterceptor());
