@@ -1,35 +1,32 @@
-import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { Logger } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import {
+  ZodValidationPipe,
+  ZodSerializerInterceptor,
+  cleanupOpenApiDoc
+} from 'nestjs-zod';
 import { AppModule } from './app/app.module';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-
-
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
+  //
+  // app.useGlobalPipes(new ZodValidationPipe());
+  // app.useGlobalInterceptors(new ZodSerializerInterceptor());
 
   const config = new DocumentBuilder()
     .setTitle('My Drive API')
-    .setDescription('Документация для нашего облачного диска (S3 + Postgres)')
     .setVersion('1.0')
     .build();
 
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    transform: true,
-  }));
-
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document);
+  SwaggerModule.setup('api', app, cleanupOpenApiDoc(document));
 
   const port = process.env.PORT || 3000;
+
   await app.listen(port);
 
-  console.log(`🚀 Бэкенд запущен: http://localhost:${port}/${globalPrefix}`);
-  console.log(`📚 Swagger UI доступен по адресу: http://localhost:${port}/api/docs`);
+  Logger.log(`🚀 Бэкенд успешно запущен на: http://localhost:${port}`);
+  Logger.log(`📚 Swagger документация доступна по адресу: http://localhost:${port}/api`);
 }
-
 bootstrap();

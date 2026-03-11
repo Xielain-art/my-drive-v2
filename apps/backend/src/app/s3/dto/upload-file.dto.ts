@@ -1,10 +1,12 @@
+import { createZodDto } from 'nestjs-zod';
 import { ApiProperty } from '@nestjs/swagger';
+import { UploadFileSchema } from '@my-drive-v2/shared-types';
 
-export class UploadFileDto {
+export class UploadFileDto extends createZodDto(UploadFileSchema) {
   @ApiProperty({
     type: 'string',
     format: 'binary',
-    description: 'Выберите файл для загрузки',
+    description: 'Файл для загрузки',
   })
-  file: any;
+  file: Express.Multer.File;
 }

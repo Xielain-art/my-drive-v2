@@ -1,10 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { FileEntity } from '../../file.entity';
+import { createZodDto } from 'nestjs-zod';
+import { UploadFileResponseSchema } from '@my-drive-v2/shared-types'; // твой импорт из shared lib
 
-export class UploadFileResponseDto {
-  @ApiProperty({ example: 'Файл успешно загружен!' })
-  message: string;
-
-  @ApiProperty({ type: () => FileEntity })
-  file: FileEntity;
-}
+export class UploadFileResponseDto extends createZodDto(UploadFileResponseSchema) {}

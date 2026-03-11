@@ -60,7 +60,10 @@ export class S3Controller {
 
     return {
       message: 'Файл успешно загружен!',
-      file: savedFile
+      file: {
+        ...savedFile,
+        createdAt: savedFile.createdAt ? savedFile.createdAt.toISOString() : undefined
+      }
     };
   }
 
