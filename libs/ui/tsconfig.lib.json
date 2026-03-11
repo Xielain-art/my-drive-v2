@@ -9,6 +9,9 @@
       "vite/client"
     ]
   },
+//  "paths": {
+//    "@/libs/ui/*": ["./*"]
+//  },
   "exclude": [
     "**/*.spec.ts",
     "**/*.test.ts",

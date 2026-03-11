@@ -6,20 +6,16 @@
   "tailwind": {
     "config": "",
     "css": "libs/ui/src/globals.css",
-    "baseColor": "neutral",
+    "baseColor": "slate",
     "cssVariables": true,
     "prefix": ""
   },
-  "iconLibrary": "lucide",
-  "rtl": false,
   "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
+    "components": "@/libs/ui/src/components",
+    "hooks": "@/libs/ui/src/hooks",
+    "utils": "@/libs/ui/src/lib/utils",
+    "ui": "@/libs/ui/src/components/ui",
+    "lib": "@/libs/ui/src/lib"
   },
-  "menuColor": "default",
-  "menuAccent": "subtle",
-  "registries": {}
+  "iconLibrary": "lucide"
 }
